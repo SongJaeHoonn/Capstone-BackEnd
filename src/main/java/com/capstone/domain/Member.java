@@ -1,5 +1,7 @@
 package com.capstone.domain;
 
+import com.capstone.domain.Item.Item;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,14 +17,23 @@ public class Member {
     @GeneratedValue
     @Column(name = "member_id")
     private Long id;
+
     private String email;
+
     private String password;
+
     private String username;
+
     private Gender gender;
+
     private int age;
 
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<CartItem> cartItems = new ArrayList<>();
+    @JsonIgnore
+    @OneToOne(mappedBy = "cart", fetch = FetchType.LAZY)
+    private Cart cart;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "review", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Review> reviews = new ArrayList<>();
 
 }
