@@ -9,6 +9,8 @@ import com.capstone.domain.Review;
 import jakarta.annotation.PostConstruct;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,7 +22,6 @@ import java.util.List;
 public class InitDb {
 
     private final InitService initService;
-
     @PostConstruct
     public void init(){
         initService.initDB();
@@ -31,12 +32,14 @@ public class InitDb {
     @RequiredArgsConstructor
     static class InitService{
 
+        private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         private final EntityManager em;
+
         public void initDB(){
             // Create sample Member
             Member member1 = new Member();
             member1.setEmail("testMember@google.com");
-            member1.setPassword("mypassword");
+            member1.setPassword(passwordEncoder.encode("mypassword"));
             member1.setUsername("홍길동");
             member1.setAge(25);
             member1.setGender(Gender.MALE);
@@ -44,7 +47,7 @@ public class InitDb {
 
             Member member2 = new Member();
             member2.setEmail("member2@naver.com");
-            member2.setPassword("gogogo");
+            member2.setPassword(passwordEncoder.encode("gogogo"));
             member2.setUsername("김나연");
             member2.setAge(20);
             member2.setGender(Gender.FEMALE);
