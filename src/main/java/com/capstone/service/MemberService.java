@@ -1,10 +1,12 @@
 package com.capstone.service;
 
+import com.capstone.domain.Cart;
 import com.capstone.domain.Gender;
 import com.capstone.domain.Member;
 import com.capstone.dto.MemberSessionDto;
 import com.capstone.dto.SignUpDto;
 import com.capstone.exception.ErrorException;
+import com.capstone.repository.CartRepository;
 import com.capstone.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -24,6 +26,7 @@ import static com.capstone.exception.ErrorCode.*;
 public class MemberService {
 
     private final MemberRepository memberRepository;
+    private final CartRepository cartRepository;
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     //회원가입
@@ -40,6 +43,9 @@ public class MemberService {
                 .gender(Gender.valueOf(request.getGender()))
                 .age(request.getAge())
                 .build();
+        Cart cart = Cart.createCart(member);
+        cartRepository.save(cart);
+
         Member savedMember = memberRepository.save(member);
         return savedMember.getId();
     }
