@@ -25,7 +25,7 @@ public class ItemQueryRepository {
 
     private ItemDetailDto findItemDetails(Long itemId) {
         return em.createQuery(
-                        "select new com.capstone.dto.ItemDetailDto(i.company, i.image, i.itemName, i.price)" +
+                        "select new com.capstone.dto.ItemDetailDto(i.company, i.image, i.itemName, i.price, i.siteUrl)" +
                                 " from Item i" +
                                 " where i.id = :itemId", ItemDetailDto.class)
                 .setParameter("itemId", itemId)

@@ -34,13 +34,21 @@ public class InitDb {
         private final EntityManager em;
         public void initDB(){
             // Create sample Member
-            Member member = new Member();
-            member.setEmail("testMember@google.com");
-            member.setPassword("mypassword");
-            member.setUsername("홍길동");
-            member.setAge(25);
-            member.setGender(Gender.MALE);
-            em.persist(member);
+            Member member1 = new Member();
+            member1.setEmail("testMember@google.com");
+            member1.setPassword("mypassword");
+            member1.setUsername("홍길동");
+            member1.setAge(25);
+            member1.setGender(Gender.MALE);
+            em.persist(member1);
+
+            Member member2 = new Member();
+            member2.setEmail("member2@naver.com");
+            member2.setPassword("gogogo");
+            member2.setUsername("김나연");
+            member2.setAge(20);
+            member2.setGender(Gender.FEMALE);
+            em.persist(member2);
 
             // Create sample Bottom
             Bottom bottom = new Bottom();
@@ -77,22 +85,31 @@ public class InitDb {
             Review review1 = new Review();
             review1.setTitle("미친듯한 청바지");
             review1.setContent("청바지 너무 이뻐요 ㅠㅠ");
-            review1.setMember(member);
+            review1.setMember(member1);
             review1.setStar(5);
             review1.setItem(bottom);
             em.persist(review1);
             Review review2 = new Review();
             review2.setTitle("아쉬운 바람막이");
             review2.setContent("실물이 왜이래요");
-            review2.setMember(member);
+            review2.setMember(member1);
             review2.setStar(2);
             review2.setItem(top);
             em.persist(review2);
+            Review review3 = new Review();
+            review2.setTitle("야무진 청바지");
+            review2.setContent("쫀쫀해요");
+            review2.setMember(member2);
+            review2.setStar(4);
+            review2.setItem(bottom);
+            em.persist(review3);
 
             List<Review> itemReviewBottom = new ArrayList<>();
             itemReviewBottom.add(review1);
             List<Review> itemReviewTop = new ArrayList<>();
             itemReviewTop.add(review2);
+            itemReviewTop.add(review3);
+
             bottom.setItemReview(itemReviewBottom);
             top.setItemReview(itemReviewTop);
 
