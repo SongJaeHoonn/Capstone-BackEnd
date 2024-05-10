@@ -1,9 +1,12 @@
 package com.capstone.domain.Item;
 
 import com.capstone.domain.Gender;
+import com.capstone.domain.Review;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 
 @Entity
 @Getter
@@ -23,6 +26,7 @@ public abstract class Item {
     private String siteUrl;
     @Column(name = "item_gender")
     private Gender itemGender;
-    private boolean isNew;
-    private boolean isBest;
+    private String image;
+    @OneToMany(mappedBy = "item", fetch = FetchType.EAGER)
+    private List<Review> itemReview;
 }
