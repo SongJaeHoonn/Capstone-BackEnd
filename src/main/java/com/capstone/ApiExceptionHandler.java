@@ -1,6 +1,6 @@
 package com.capstone;
 
-import com.capstone.controller.MemberController;
+import com.capstone.controller.*;
 import com.capstone.exception.ErrorCode;
 import com.capstone.exception.ErrorException;
 import com.capstone.exception.ErrorResponse;
@@ -9,8 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice(assignableTypes = {
-        MemberController.class
-})
+        MemberController.class, CartController.class, ReviewController.class, ItemDetailController.class, MyPageController.class})
 public class ApiExceptionHandler {
     @ExceptionHandler
     public ResponseEntity<ErrorResponse> catchException(ErrorException ex) {
