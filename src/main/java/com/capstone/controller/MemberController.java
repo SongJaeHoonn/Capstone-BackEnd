@@ -1,9 +1,7 @@
 package com.capstone.controller;
 
-import com.capstone.dto.LoginFormDto;
-import com.capstone.dto.LoginResponseDto;
-import com.capstone.dto.MemberSessionDto;
-import com.capstone.dto.SignUpDto;
+import com.capstone.domain.Item.Item;
+import com.capstone.dto.*;
 import com.capstone.exception.ErrorCode;
 import com.capstone.exception.ErrorException;
 import com.capstone.service.MemberService;
@@ -15,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -34,8 +34,10 @@ public class MemberController {
     @PostMapping("/login") //로그인 (request : loginId, password / response : (session)id, loginId, username)
     public LoginResponseDto login(@Valid @RequestBody LoginFormDto loginFormDto, HttpServletRequest request){
         MemberSessionDto memberSession = memberService.login(loginFormDto.getEmail(), loginFormDto.getPassword());
+        List<ItemResponseDto> recentProducts = new ArrayList<>();
         HttpSession session = request.getSession();
         session.setAttribute("SESSION_KEY", memberSession);
+        session.setAttribute("recentProducts", recentProducts);
         return new LoginResponseDto(memberSession.getId(), memberSession.getEmail(), memberSession.getUsername());
     }
 
