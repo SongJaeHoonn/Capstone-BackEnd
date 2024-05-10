@@ -27,6 +27,6 @@ public abstract class Item {
     @Column(name = "item_gender")
     private Gender itemGender;
     private String image;
-    @OneToMany(mappedBy = "item")
+    @OneToMany(mappedBy = "item", fetch = FetchType.EAGER)
     private List<Review> itemReview;
 }
