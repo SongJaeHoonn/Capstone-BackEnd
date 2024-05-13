@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+import static com.capstone.SessionFactory.SESSION_KEY;
+
 
 @Service
 @RequiredArgsConstructor
@@ -23,7 +25,7 @@ public class ReviewService {
     private final MemberRepository memberRepository;
     private final ItemRepository itemRepository;
     public void addReview(ReviewRequestDto reviewRequestDto, HttpSession session, Long itemId){
-        MemberSessionDto findedSession = (MemberSessionDto) session.getAttribute("SESSION_KEY");
+        MemberSessionDto findedSession = (MemberSessionDto) session.getAttribute(SESSION_KEY);
         Optional<Member> member = memberRepository.findById(findedSession.getId());
             Optional<Item> item = itemRepository.findById(itemId);
             Review review = new Review();
