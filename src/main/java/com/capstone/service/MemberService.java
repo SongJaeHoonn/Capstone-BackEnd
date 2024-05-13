@@ -42,6 +42,9 @@ public class MemberService {
                 .username(request.getUsername())
                 .gender(Gender.valueOf(request.getGender()))
                 .age(request.getAge())
+                .height(request.getHeight())
+                .weight(request.getWeight())
+                .waist(request.getWaist())
                 .build();
         Cart cart = Cart.createCart(member);
         cartRepository.save(cart);

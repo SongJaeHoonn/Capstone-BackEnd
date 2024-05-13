@@ -1,6 +1,7 @@
 package com.capstone.controller;
 
 import com.capstone.domain.Item.Item;
+import com.capstone.domain.Member;
 import com.capstone.dto.*;
 import com.capstone.exception.ErrorCode;
 import com.capstone.exception.ErrorException;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import static com.capstone.SessionFactory.SESSION_KEY;
 
 
 @RestController
@@ -36,7 +39,7 @@ public class MemberController {
         MemberSessionDto memberSession = memberService.login(loginFormDto.getEmail(), loginFormDto.getPassword());
         List<ItemResponseDto> recentProducts = new ArrayList<>();
         HttpSession session = request.getSession();
-        session.setAttribute("SESSION_KEY", memberSession);
+        session.setAttribute(SESSION_KEY, memberSession);
         session.setAttribute("recentProducts", recentProducts);
         return new LoginResponseDto(memberSession.getId(), memberSession.getEmail(), memberSession.getUsername());
     }
@@ -60,15 +63,16 @@ public class MemberController {
         );
     }
 
+
     @GetMapping("/session-check")
     public MemberSessionDto sessionCheck(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
 
-        if (Objects.isNull(session) || Objects.isNull(session.getAttribute("SESSION_KEY"))) {
+        if (Objects.isNull(session) || Objects.isNull(session.getAttribute(SESSION_KEY))) {
             throw ErrorException.type(ErrorCode.AUTHENTICATION_USER);
         }
 
-        return (MemberSessionDto) session.getAttribute("SESSION_KEY");
+        return (MemberSessionDto) session.getAttribute(SESSION_KEY);
     }
 
 }
