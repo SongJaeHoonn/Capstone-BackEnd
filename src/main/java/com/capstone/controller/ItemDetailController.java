@@ -24,18 +24,19 @@ public class ItemDetailController {
     @GetMapping("/itemDetail/{id}")
     public ItemDetailDto itemDetail(@PathVariable long id, HttpServletRequest request){
         HttpSession session = request.getSession(false);
-        List<ItemResponseDto> recentProducts = (List<ItemResponseDto>) session.getAttribute("recentProducts");
-        Item item = itemRepository.findById(id).get();
-        ItemResponseDto itemResponseDto = new ItemResponseDto(item.getId(), item.getImage(), item.getItemName(), item.getPrice(), item.getCompany());
+        if(session != null) {
+            List<ItemResponseDto> recentProducts = (List<ItemResponseDto>) session.getAttribute("recentProducts");
+            Item item = itemRepository.findById(id).get();
+            ItemResponseDto itemResponseDto = new ItemResponseDto(item.getId(), item.getImage(), item.getItemName(), item.getPrice(), item.getCompany());
 
-        if (!recentProducts.contains(itemResponseDto)) {
-            recentProducts.add(0, itemResponseDto);
-            if (recentProducts.size() > 5) {
-                recentProducts.remove(recentProducts.size() - 1);
+            if (!recentProducts.contains(itemResponseDto)) {
+                recentProducts.add(0, itemResponseDto);
+                if (recentProducts.size() > 5) {
+                    recentProducts.remove(recentProducts.size() - 1);
+                }
+                session.setAttribute("recentProducts", recentProducts);
             }
-            session.setAttribute("recentProducts", recentProducts);
         }
-
         return itemService.getItemDetails(id);
     }
 }
