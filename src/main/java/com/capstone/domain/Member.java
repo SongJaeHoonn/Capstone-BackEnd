@@ -32,6 +32,10 @@ public class Member {
 
     private int age;
 
+    private double height;
+    private double weight;
+    private double waist;
+
     @JsonIgnore
     @OneToOne(mappedBy = "member", fetch = FetchType.LAZY)
     private Cart cart;
