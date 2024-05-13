@@ -1,9 +1,10 @@
 package com.capstone.controller;
 
 
-import com.capstone.domain.Item.Item;
 import com.capstone.dto.ItemResponseDto;
 import com.capstone.dto.MyPageResponseDto;
+import com.capstone.exception.ErrorCode;
+import com.capstone.exception.ErrorException;
 import com.capstone.service.MyPageService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;

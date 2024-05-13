@@ -47,6 +47,9 @@ public class MyPageService {
         myPageResponseDto.setEmail(member.getEmail());
         myPageResponseDto.setAge(member.getAge());
         myPageResponseDto.setGender(String.valueOf(member.getGender()));
+        myPageResponseDto.setHeight(member.getHeight());
+        myPageResponseDto.setWeight(member.getWeight());
+        myPageResponseDto.setWaist(member.getWaist());
         myPageResponseDto.setMyReviewsCount(member.getReviews().size());
         myPageResponseDto.setShoppingCartCount(member.getCart().getCartItems().size());
         myPageResponseDto.setSearchedProductsCount(recentProducts.size());
