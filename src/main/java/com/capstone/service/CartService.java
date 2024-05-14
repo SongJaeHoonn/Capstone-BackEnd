@@ -16,6 +16,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 import static com.capstone.SessionFactory.SESSION_KEY;
 
 @Service
@@ -46,5 +48,11 @@ public class CartService {
         return member.getCart();
     }
 
-
+    @Transactional
+    public void deleteItemFromCart(Long itemId, Long userId) {
+        Optional<Member> member = memberRepository.findById(userId);
+        Member findMember = member.get();
+        Cart cart = findMember.getCart();
+        cart.deleteCartItem(itemId);
+    }
 }

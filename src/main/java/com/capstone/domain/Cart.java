@@ -6,7 +6,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Getter
@@ -38,6 +40,17 @@ public class Cart {
         cartItems.add(cartItem);
         cartItem.setCart(this);
         count++;
+    }
+
+    public void deleteCartItem(Long itemId){
+        Iterator<CartItem> iterator = cartItems.iterator();
+        while (iterator.hasNext()) {
+            CartItem cartItem = iterator.next();
+            if (Objects.equals(cartItem.getItem().getId(), itemId)) {
+                iterator.remove();
+                count--;
+            }
+        }
     }
 
 }

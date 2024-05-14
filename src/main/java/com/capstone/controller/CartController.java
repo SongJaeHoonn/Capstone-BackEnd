@@ -1,13 +1,14 @@
 package com.capstone.controller;
 
+import com.capstone.dto.MemberSessionDto;
 import com.capstone.service.CartService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import static com.capstone.SessionFactory.SESSION_KEY;
 
 @RestController
 @RequiredArgsConstructor
@@ -22,5 +23,12 @@ public class CartController {
         return ResponseEntity.ok().build();
     }
 
+    @DeleteMapping("/deleteCartItem/{itemId}")
+    public ResponseEntity<Void> deleteItemFromCart(@PathVariable Long itemId, HttpServletRequest request){
+        HttpSession session = request.getSession(false);
+        MemberSessionDto dto = (MemberSessionDto) session.getAttribute(SESSION_KEY);
+        cartService.deleteItemFromCart(itemId, dto.getId());
+        return ResponseEntity.ok().build();
+    }
 
 }
