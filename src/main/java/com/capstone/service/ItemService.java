@@ -6,6 +6,8 @@ import com.capstone.dto.ItemResponseDto;
 import com.capstone.repository.ItemRepository;
 import com.capstone.repository.queryrepository.ItemQueryRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -23,29 +25,34 @@ public class ItemService {
         return itemQueryRepository.findItemDetailDtos(itemId);
     }
 
-    public List<ItemResponseDto> findAll() {
-        List<Item> items = itemRepository.findAll();
-        List<ItemResponseDto> result = new ArrayList<>();
-        for (Item item : items) {
-            ItemResponseDto itemResponseDto = new ItemResponseDto();
-            itemResponseDto.setId(item.getId());
-        }
-
-        return result;
+    public Page<ItemResponseDto> findAllItem(int page, int size){
+        PageRequest pageRequest = PageRequest.of(page, size);
+        return itemQueryRepository.findSearchedItems("", pageRequest);
     }
 
-    public List<ItemResponseDto> searchItem(String content) {
-        List<ItemResponseDto> list = new ArrayList<>();
-        List<Item> items = itemRepository.findByItemNameContaining(content);
-        for (Item item : items) {
-            ItemResponseDto itemResponseDto = new ItemResponseDto();
-            itemResponseDto.setId(item.getId());
-            itemResponseDto.setItemName(item.getItemName());
-            itemResponseDto.setCompany(item.getCompany());
-            itemResponseDto.setPrice(item.getPrice());
-            itemResponseDto.setImage(item.getImage());
-            list.add(itemResponseDto);
-        }
-        return list;
+    public Page<ItemResponseDto> findSearchItem(String content, int page, int size){
+        PageRequest pageRequest = PageRequest.of(page, size);
+        return itemQueryRepository.findSearchedItems(content, pageRequest);
     }
+
+    public Page<ItemResponseDto> findTopItem(int page, int size){
+        PageRequest pageRequest = PageRequest.of(page, size);
+        return itemQueryRepository.findTopCategory(pageRequest);
+    }
+
+    public Page<ItemResponseDto> findBottomItem(int page, int size){
+        PageRequest pageRequest = PageRequest.of(page, size);
+        return itemQueryRepository.findTopCategory(pageRequest);
+    }
+
+    public Page<ItemResponseDto> findMenItem(int page, int size){
+        PageRequest pageRequest = PageRequest.of(page, size);
+        return itemQueryRepository.findManCategory(pageRequest);
+    }
+
+    public Page<ItemResponseDto> findWomenItem(int page, int size){
+        PageRequest pageRequest = PageRequest.of(page, size);
+        return itemQueryRepository.findWomenCategory(pageRequest);
+    }
+
 }
