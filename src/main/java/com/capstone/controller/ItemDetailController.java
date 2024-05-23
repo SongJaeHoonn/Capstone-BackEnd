@@ -22,9 +22,9 @@ public class ItemDetailController {
     private final ItemRepository itemRepository;
 
     @GetMapping("/itemDetail/{id}")
-    public ItemDetailDto itemDetail(@PathVariable long id, HttpServletRequest request){
+    public ItemDetailDto itemDetail(@PathVariable Long id, HttpServletRequest request) {
         HttpSession session = request.getSession(false);
-        if(session != null) {
+        if (session != null) {
             List<ItemResponseDto> recentProducts = (List<ItemResponseDto>) session.getAttribute("recentProducts");
             Item item = itemRepository.findById(id).get();
             ItemResponseDto itemResponseDto = new ItemResponseDto(item.getId(), item.getImage(), item.getItemName(), item.getPrice(), item.getCompany());
