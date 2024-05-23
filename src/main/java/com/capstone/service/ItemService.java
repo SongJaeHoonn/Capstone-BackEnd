@@ -42,7 +42,7 @@ public class ItemService {
 
     public Page<ItemResponseDto> findBottomItem(int page, int size){
         PageRequest pageRequest = PageRequest.of(page, size);
-        return itemQueryRepository.findTopCategory(pageRequest);
+        return itemQueryRepository.findBottomCategory(pageRequest);
     }
 
     public Page<ItemResponseDto> findMenItem(int page, int size){
