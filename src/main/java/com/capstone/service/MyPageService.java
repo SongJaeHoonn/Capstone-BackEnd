@@ -33,14 +33,14 @@ public class MyPageService {
         List<ItemResponseDto> reviewItems = new ArrayList<>();
         for (Review review : member.getReviews()) {
             Item item = review.getItem();
-            ItemResponseDto itemResponseDto = new ItemResponseDto(item.getId(), item.getImage(), item.getItemName(), item.getPrice(), item.getCompany());
+            ItemResponseDto itemResponseDto = new ItemResponseDto(item.getId(), item.getImage(), item.getItemName(), item.getPrice(), item.getCompany(), item.getSize());
             reviewItems.add(itemResponseDto);
         }
 
         List<ItemResponseDto> cartItems = new ArrayList<>();
         for(CartItem item : member.getCart().getCartItems()){
             Item finditem = item.getItem();
-            ItemResponseDto itemResponseDto = new ItemResponseDto(finditem.getId(), finditem.getImage(), finditem.getItemName(), finditem.getPrice(), finditem.getCompany());
+            ItemResponseDto itemResponseDto = new ItemResponseDto(finditem.getId(), finditem.getImage(), finditem.getItemName(), finditem.getPrice(), finditem.getCompany(), finditem.getSize());
             cartItems.add(itemResponseDto);
         }
         MyPageResponseDto myPageResponseDto = new MyPageResponseDto();

@@ -27,7 +27,7 @@ public class ItemDetailController {
         if (session != null) {
             List<ItemResponseDto> recentProducts = (List<ItemResponseDto>) session.getAttribute("recentProducts");
             Item item = itemRepository.findById(id).get();
-            ItemResponseDto itemResponseDto = new ItemResponseDto(item.getId(), item.getImage(), item.getItemName(), item.getPrice(), item.getCompany());
+            ItemResponseDto itemResponseDto = new ItemResponseDto(item.getId(), item.getImage(), item.getItemName(), item.getPrice(), item.getCompany(), item.getSize());
 
             if (!recentProducts.contains(itemResponseDto)) {
                 recentProducts.add(0, itemResponseDto);

@@ -40,7 +40,7 @@ public class MemberService {
                 .email(request.getEmail())
                 .password(encodedPassword)
                 .username(request.getUsername())
-                .gender(Gender.valueOf(request.getGender()))
+                .gender(Gender.valueOf(request.getGender().toUpperCase()))
                 .age(request.getAge())
                 .height(request.getHeight())
                 .weight(request.getWeight())

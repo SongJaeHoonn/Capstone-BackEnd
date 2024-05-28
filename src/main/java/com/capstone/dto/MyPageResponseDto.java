@@ -15,7 +15,7 @@ public class MyPageResponseDto {
 
     private String email;
     private String gender;
-    private int age;
+    private String age;
     private double height;
     private double weight;
     private double waist;
