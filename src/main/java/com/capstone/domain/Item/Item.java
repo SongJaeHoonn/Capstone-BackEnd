@@ -21,6 +21,7 @@ public abstract class Item {
     private String company;
     @Column(name = "item_name")
     private String itemName;
+    private String size;
     private int price;
     @Column(name = "site_url")
     private String siteUrl;
