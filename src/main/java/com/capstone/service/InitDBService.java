@@ -52,7 +52,7 @@ public class InitDBService {
                 item.setCompany(record[0]);
                 item.setItemName(record[1]);
                 item.setSize(record[3]);
-                item.setPrice(Integer.parseInt(record[7]));
+                item.setPrice(record[7]);
                 item.setSiteUrl(record[9]);
                 item.setImage(record[8]);
 
@@ -107,7 +107,7 @@ public class InitDBService {
                 item.setCompany(record[9]);
                 item.setItemName(record[0]);
                 item.setSize(record[2]);
-                item.setPrice(Integer.parseInt(record[8]));
+                item.setPrice(record[8]);
                 item.setSiteUrl(record[11]);
                 item.setImage(record[7]);
 
