@@ -14,7 +14,8 @@ public class ItemResponseDto {
     private Long id;
     private String image;
     private String itemName;
-    private int price;
+    private String price;
     private String company;
+    private String size;
 
 }
