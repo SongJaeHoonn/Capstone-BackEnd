@@ -22,7 +22,7 @@ public abstract class Item {
     @Column(name = "item_name")
     private String itemName;
     private String size;
-    private int price;
+    private String price;
     @Column(name = "site_url")
     private String siteUrl;
     @Column(name = "item_gender")
