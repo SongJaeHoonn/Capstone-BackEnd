@@ -30,14 +30,14 @@ public class Member {
     @Enumerated(value = EnumType.STRING)
     private Gender gender;
 
-    private int age;
+    private String age;
 
     private double height;
     private double weight;
     private double waist;
 
     @JsonIgnore
-    @OneToOne(mappedBy = "member", fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Cart cart;
 
     @JsonIgnore

@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 public class Top extends Item{
     private double length;          //총장
-    private double shoulderWidth;   //어깨너비
-    private double chestWidth;      //가슴너비
-    private double sleeveLength;    //소매길이
+    private double shoulderWidth;
+    private double chestCrossSection;
+    private double sleeveLength;
 }
