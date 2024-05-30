@@ -32,6 +32,7 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation 'org.springframework.security:spring-security-crypto:5.7.1'
 	implementation 'com.opencsv:opencsv:5.5.2'
+	compileOnly("org.springframework.boot:spring-boot-devtools")
 }
 
 tasks.named('test') {

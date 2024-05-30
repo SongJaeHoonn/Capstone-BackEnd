@@ -24,11 +24,13 @@ public class MainController {
     private final ItemService itemService;
 
     @ResponseBody
-    @GetMapping("/")
+    @GetMapping("/main")
     public ResponseEntity index(@Positive @RequestParam int page){
         Page<ItemResponseDto> allItemPage = itemService.findAllItem(page - 1, 5);
         PageInfo pageInfo = new PageInfo(page, 5,(int)allItemPage.getTotalElements(), allItemPage.getTotalPages());
         List<ItemResponseDto> items = allItemPage.getContent();
         return new ResponseEntity<>(new ItemAllDto<>(items, pageInfo), HttpStatus.OK);
     }
+
+
 }
