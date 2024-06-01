@@ -1,5 +1,4 @@
 import os.path
-
 import cv2
 import mediapipe as mp
 import numpy as np
@@ -14,10 +13,6 @@ mp_drawing = mp.solutions.drawing_utils
 def calculate_distance(p1, p2):
     """두 점 사이의 유클리디언 거리를 계산"""
     return np.sqrt((p1[0] - p2[0]) ** 2 + (p1[1] - p2[1]) ** 2)
-
-def calculate_top_length(shoulder_x, shoulder_y, hip_x, hip_y):
-    """어깨에서 엉덩이까지의 길이 계산"""
-    return calculate_distance([shoulder_x, shoulder_y], [hip_x, hip_y])
 
 def estimate_body_measurements(image, user_height_cm):
     """이미지를 기반으로 신체 치수 추정"""
@@ -48,9 +43,15 @@ def estimate_body_measurements(image, user_height_cm):
         leg_length_pixels = calculate_distance(hip_left, ankle_left)
 
         # 상체 길이 추정
-        top_length_left = calculate_top_length(shoulder_left[0], shoulder_left[1], hip_left[0], hip_left[1])
-        top_length_right = calculate_top_length(shoulder_right[0], shoulder_right[1], hip_right[0], hip_right[1])
-        average_top_length = (top_length_left + top_length_right) / 2
+        neck = [landmarks[mp_pose.PoseLandmark.NOSE].x, landmarks[mp_pose.PoseLandmark.NOSE].y]
+        top_length_left = calculate_distance(neck, hip_left)
+        top_length_right = calculate_distance(neck, hip_right)
+        average_top_length_pixels = (top_length_left + top_length_right) / 2
+
+        # 가슴 단면 길이 추정
+        chest_left = [landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER].x, landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER].y]
+        chest_right = [landmarks[mp_pose.PoseLandmark.RIGHT_SHOULDER].x, landmarks[mp_pose.PoseLandmark.RIGHT_SHOULDER].y]
+        chest_width_pixels = calculate_distance(chest_left, chest_right)
 
         # 픽셀 단위의 치수를 사용자의 키를 기반으로 실제 치수로 변환
         heel_left = [landmarks[mp_pose.PoseLandmark.LEFT_HEEL].x, landmarks[mp_pose.PoseLandmark.LEFT_HEEL].y]
@@ -61,6 +62,8 @@ def estimate_body_measurements(image, user_height_cm):
         waist_circumference_cm = waist_circumference_pixels * pixel_to_cm_ratio + 12
         arm_length_cm = arm_length_pixels * pixel_to_cm_ratio
         leg_length_cm = leg_length_pixels * pixel_to_cm_ratio
+        top_length_cm = average_top_length_pixels * pixel_to_cm_ratio
+        chest_width_cm = chest_width_pixels * pixel_to_cm_ratio
 
         # JSON 데이터 생성
         body_measurements = {
@@ -68,8 +71,8 @@ def estimate_body_measurements(image, user_height_cm):
             "waistWidth": waist_circumference_cm,
             "sleeveLength": arm_length_cm,
             "bottomLength": leg_length_cm,
-            "topLength": average_top_length
-            # "chestCrossSection": 추가 예정
+            "topLength": top_length_cm,
+            "chestCrossSection": chest_width_cm
         }
 
         return body_measurements
@@ -77,14 +80,14 @@ def estimate_body_measurements(image, user_height_cm):
         return None
 
 def main():
-
+    # 이미지 파일 경로
     image_path = os.path.abspath(sys.argv[1])
     user_height_cm = float(sys.argv[2])
-
     # 이미지 읽기
     image = cv2.imread(image_path)
 
     if image is not None:
+
         body_measurements = estimate_body_measurements(image, user_height_cm)
         if body_measurements:
             # JSON 형식으로 변환
