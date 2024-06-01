@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice(assignableTypes = {
-        MemberController.class, CartController.class, ReviewController.class, ItemDetailController.class, MyPageController.class})
+        MemberController.class, CartController.class, ReviewController.class, ItemDetailController.class, MyPageController.class, RecommendController.class, FileController.class})
 public class ApiExceptionHandler {
     @ExceptionHandler
     public ResponseEntity<ErrorResponse> catchException(ErrorException ex) {
