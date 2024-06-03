@@ -2,6 +2,7 @@ package com.capstone.controller;
 
 
 import com.capstone.dto.ItemResponseDto;
+import com.capstone.dto.MemberSessionDto;
 import com.capstone.dto.MyPageResponseDto;
 import com.capstone.exception.ErrorCode;
 import com.capstone.exception.ErrorException;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+import static com.capstone.SessionFactory.SESSION_KEY;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api")
@@ -23,11 +26,12 @@ public class MyPageController {
 
     private final MyPageService myPageService;
 
-    @GetMapping("/mypage/{id}")
-    public MyPageResponseDto getMyPage(@PathVariable Long id, HttpServletRequest request){
+    @GetMapping("/mypage")
+    public MyPageResponseDto getMyPage(HttpServletRequest request){
         HttpSession session = request.getSession(false);
         Object recentProducts = session.getAttribute("recentProducts");
         List<ItemResponseDto> findRecentProducts = (List<ItemResponseDto>) recentProducts;
-        return myPageService.getMyPage(id, findRecentProducts);
+        MemberSessionDto dto = (MemberSessionDto) session.getAttribute(SESSION_KEY);
+        return myPageService.getMyPage(dto.getId(), findRecentProducts);
     }
 }
