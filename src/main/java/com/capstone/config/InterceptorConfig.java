@@ -12,7 +12,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
         registry.addInterceptor(new RequestInterceptor())
                 .order(1)
                 .addPathPatterns("/update/**", "/api/addReview/**", "/api/addCart/**", "/api/mypage/**",
-                        "/api/deleteCartItem/**")
+                        "/api/deleteCartItem/**", "/api/upload", "/api/recommend")
                 .excludePathPatterns(
                         "/signUp", "/login" // Login
                         , "/session-check" // MemberController
