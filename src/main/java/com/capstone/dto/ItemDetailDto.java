@@ -10,6 +10,7 @@ import java.util.Map;
 @Setter
 public class ItemDetailDto {
 
+    private Long id;
     private String company;
     private String image;
     private String itemName;
@@ -27,8 +28,19 @@ public class ItemDetailDto {
         this.siteUrl = siteUrl;
         this.size = size;
     }
+    public ItemDetailDto(Long id, String company, String image, String itemName, String price, String siteUrl, String size) {
+        this.id = id;
+        this.company = company;
+        this.image = image;
+        this.itemName = itemName;
+        this.price = price;
+        this.siteUrl = siteUrl;
+        this.size = size;
+    }
 
-    public ItemDetailDto(String company, String image, String itemName, String price, String siteUrl, List<ItemReviewDto> itemReview, String size, Map<String, Double> sizeList) {
+
+    public ItemDetailDto(Long id, String company, String image, String itemName, String price, String siteUrl, List<ItemReviewDto> itemReview, String size, Map<String, Double> sizeList) {
+        this.id = id;
         this.company = company;
         this.image = image;
         this.itemName = itemName;
