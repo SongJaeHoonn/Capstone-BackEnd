@@ -37,7 +37,7 @@ public class ItemQueryRepository {
         ItemDetailDto itemDetailDto;
 
         if ("Bottom".equals(itemType)) {
-            itemDetailDto = new ItemDetailDto((String) result[0], (String) result[1], (String) result[2], (String) result[3], (String) result[4], (String) result[5]);
+            itemDetailDto = new ItemDetailDto(itemId, (String) result[0], (String) result[1], (String) result[2], (String) result[3], (String) result[4], (String) result[5]);
             Map<String, Double> sizeList = new HashMap<>();
             sizeList.put("length", (Double) result[7]);
             sizeList.put("waistWidth", (Double) result[8]);
