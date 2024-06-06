@@ -114,6 +114,6 @@ public class RecommendService {
             sizeList.put("waistWidth", bottom.getWaistWidth());
         }
 
-        return new ItemDetailDto(item.getCompany(), item.getImage(), item.getItemName(), item.getPrice(), item.getSiteUrl(), null, item.getSize(), sizeList);
+        return new ItemDetailDto(item.getId(), item.getCompany(), item.getImage(), item.getItemName(), item.getPrice(), item.getSiteUrl(), null, item.getSize(), sizeList);
     }
 }
